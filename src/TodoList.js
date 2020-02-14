@@ -17,7 +17,10 @@ class TodoList extends Component {
               title={todo.title}
               completed={todo.completed}
               />
-            ))}
+            )
+            )
+              }
+
           </ul>
         </section>
       );
