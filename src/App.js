@@ -1,31 +1,26 @@
 import React, { Component } from "react";
 import "./index.css";
-import TodoList from './TodoList.js';
 import todosList from "./todos.json";
 import {
   Route,
   NavLink
-} from "react-router-dom"
+} from "react-router-dom";
+import TodoList from "./TodoList.js";
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      todos: todosList,
-      value: ""
-    };
-
-  }
-
+  state = {
+    todos: todosList,
+    value: ""
+  };
   handleDelete = todoIdToDelete => {
-    const newTodoList = this.props.state.todo.filter(
+    const newTodoList = this.state.todos.filter(
       todo => todo.id !== todoIdToDelete);
     this.setState({ todos: newTodoList });
   };
 
   handleCreate = (event) => {
     if (event.key === 'Enter') {
-      const newTodoList = this.state.todo.slice();
+      const newTodoList = this.state.todos.slice();
       newTodoList.push({
         userId: 1,
         id: Math.floor(Math.random()*1000000),
@@ -41,13 +36,14 @@ class App extends Component {
   };
 
   handleToggle = todoIdToToggle => {
-    const newTodos = this.state.todo.slice();
-    const newTodoList = newTodos.map(todo => {
+    // const newTodos = this.state.todos.slice();
+    const newTodoList = this.state.todos.map(todo => {
       if (todo.id === todoIdToToggle) {
-        return {
+        const newTodo = {
           ...todo,
           completed: !todo.completed
-        };
+        }
+        return newTodo;
       }
       return todo;
     });
@@ -55,9 +51,9 @@ class App extends Component {
   };
 
   handleClearClick = () => {
-    let todo = this.state.todos;
-    todo = todo.filter(a => !a.completed);
-    this.setState({ todos: todo });
+    let todos = this.state.todos;
+    todos = todos.filter(a => !a.completed);
+    this.setState({ todos: todos });
   };
 
   render() {
@@ -68,7 +64,7 @@ class App extends Component {
           <input
             className="new-todo"
             placeholder="What needs to be done?"
-            // autofocus
+            autofocus
             onKeyDown={this.props.handleCreate}
             onChange={this.props.handleChange}
             value={this.state.value}
@@ -89,7 +85,7 @@ class App extends Component {
               <TodoList
               handleToggle={this.handleToggle}
               handleDelete={this.handleDelete}
-              todos={this.props.state.todos.filter(todo=>todo.completed === false)}/>
+              todos={this.state.todos.filter(todo=>todo.completed === false)}/>
             )}/>
           <Route
             path="/completed"
@@ -97,7 +93,7 @@ class App extends Component {
               <TodoList
                 handleToggle={this.handleToggle}
                 handleDelete={this.handleDelete}
-                todos={this.props.state.todos.filter(todo=>todo.completed === true)}/>
+                todos={this.state.todos.filter(todo=>todo.completed === true)}/>
             )}/>
         <footer className="footer">
           <span className="todo-count">
