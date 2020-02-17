@@ -4,22 +4,22 @@ import TodoItem from './TodoItem.js'
 class TodoList extends Component {
     render() {
       return (
-        <section className="main">
+        // <section className="main">
           <ul className="todo-list">
             {this.props.todos.map(todo => (
               <TodoItem
-              handleClear = {event =>
+              handleClear = {todo =>
               this.props.handleClear(todo.id)}
-              handleToggle={event =>
+              handleToggle={todo =>
               this.props.handleToggle(todo.id)}
-              handleDelete = {event =>
+              handleDelete = {todo =>
               this.props.handleDelete(todo.id)}
               title={todo.title}
               completed={todo.completed}
               />
             ))}
           </ul>
-        </section>
+        // </section>
       );
     }
   }

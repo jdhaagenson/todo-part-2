@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./index.css";
 import TodoList from './TodoList.js';
-
 import "./todos.json";
 import {
   Route,
