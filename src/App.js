@@ -1,27 +1,31 @@
 import React, { Component } from "react";
 import "./index.css";
 import TodoList from './TodoList.js';
-import "./todos.json";
+import todosList from "./todos.json";
 import {
   Route,
   NavLink
 } from "react-router-dom"
 
 class App extends Component {
-  state = {
-    todos: TodoList,
-    value: ""
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      todos: todosList,
+      value: ""
+    };
+
+  }
 
   handleDelete = todoIdToDelete => {
-    const newTodoList = this.props.state.todos.filter(
+    const newTodoList = this.props.state.todo.filter(
       todo => todo.id !== todoIdToDelete);
     this.setState({ todos: newTodoList });
   };
 
   handleCreate = (event) => {
     if (event.key === 'Enter') {
-      const newTodoList = this.props.state.todos.slice();
+      const newTodoList = this.state.todo.slice();
       newTodoList.push({
         userId: 1,
         id: Math.floor(Math.random()*1000000),
@@ -37,11 +41,13 @@ class App extends Component {
   };
 
   handleToggle = todoIdToToggle => {
-    const newTodoList = this.props.state.todos.map(todo => {
+    const newTodos = this.state.todo.slice();
+    const newTodoList = newTodos.map(todo => {
       if (todo.id === todoIdToToggle) {
-        const newTodo = {...todo };
-        newTodo.completed = !newTodo.completed
-        return newTodo;
+        return {
+          ...todo,
+          completed: !todo.completed
+        };
       }
       return todo;
     });
@@ -49,9 +55,9 @@ class App extends Component {
   };
 
   handleClearClick = () => {
-    let todos = this.props.state.todos;
-    todos = todos.filter(a => !a.completed);
-    this.setState({ todos: todos });
+    let todo = this.state.todos;
+    todo = todo.filter(a => !a.completed);
+    this.setState({ todos: todo });
   };
 
   render() {
@@ -65,7 +71,7 @@ class App extends Component {
             // autofocus
             onKeyDown={this.props.handleCreate}
             onChange={this.props.handleChange}
-            value={this.props.state.value}
+            value={this.state.value}
           />
         </header>
         <Route
