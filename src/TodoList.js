@@ -6,14 +6,14 @@ class TodoList extends Component {
     return (
       <section className="main">
         <ul className="todo-list">
-          {this.props.todos.map(todo => (
+          {this.state.todos.map(todo => (
             <TodoItem
             handleClear = {todo =>
-            this.props.handleClear(todo.id)}
+            this.state.handleClear(todo.id)}
             handleToggle={todo =>
-            this.props.handleToggle(todo.id)}
+            this.state.handleToggle(todo.id)}
             handleDelete = {todo =>
-            this.props.handleDelete(todo.id)}
+            this.state.handleDelete(todo.id)}
             title={todo.title}
             completed={todo.completed}
             />
