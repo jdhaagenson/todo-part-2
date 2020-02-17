@@ -14,14 +14,14 @@ class App extends Component {
   };
 
   handleDelete = todoIdToDelete => {
-    const newTodoList = this.state.todos.filter(
+    const newTodoList = this.props.state.todos.filter(
       todo => todo.id !== todoIdToDelete);
     this.setState({ todos: newTodoList });
   };
 
   handleCreate = (event) => {
     if (event.key === 'Enter') {
-      const newTodoList = this.state.todos.slice();
+      const newTodoList = this.props.state.todos.slice();
       newTodoList.push({
         userId: 1,
         id: Math.floor(Math.random()*1000000),
@@ -37,7 +37,7 @@ class App extends Component {
   };
 
   handleToggle = todoIdToToggle => {
-    const newTodoList = this.state.todos.map(todo => {
+    const newTodoList = this.props.state.todos.map(todo => {
       if (todo.id === todoIdToToggle) {
         const newTodo = {...todo };
         newTodo.completed = !newTodo.completed
@@ -49,7 +49,7 @@ class App extends Component {
   };
 
   handleClearClick = () => {
-    let todos = this.state.todos;
+    let todos = this.props.state.todos;
     todos = todos.filter(a => !a.completed);
     this.setState({ todos: todos });
   };
@@ -62,10 +62,10 @@ class App extends Component {
           <input
             className="new-todo"
             placeholder="What needs to be done?"
-            autofocus
-            onKeyDown={this.handleCreate}
-            onChange={this.handleChange}
-            value={this.state.value}
+            // autofocus
+            onKeyDown={this.props.handleCreate}
+            onChange={this.props.handleChange}
+            value={this.props.state.value}
           />
         </header>
         <Route
@@ -83,7 +83,7 @@ class App extends Component {
               <TodoList
               handleToggle={this.handleToggle}
               handleDelete={this.handleDelete}
-              todos={this.state.todos.filter(todo=>todo.completed === false)}/>
+              todos={this.props.state.todos.filter(todo=>todo.completed === false)}/>
             )}/>
           <Route
             path="/completed"
@@ -91,7 +91,7 @@ class App extends Component {
               <TodoList
                 handleToggle={this.handleToggle}
                 handleDelete={this.handleDelete}
-                todos={this.state.todos.filter(todo=>todo.completed === true)}/>
+                todos={this.props.state.todos.filter(todo=>todo.completed === true)}/>
             )}/>
         <footer className="footer">
           <span className="todo-count">
