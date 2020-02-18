@@ -65,8 +65,8 @@ class App extends Component {
             className="new-todo"
             placeholder="What needs to be done?"
             autoFocus
-            onKeyDown={this.props.handleCreate}
-            onChange={this.props.handleChange}
+            onKeyDown={this.handleCreate}
+            onChange={this.handleChange}
             value={this.state.value}
           />
         </header>
