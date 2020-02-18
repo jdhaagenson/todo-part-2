@@ -96,9 +96,18 @@ class App extends Component {
                 todos={this.state.todos.filter(todo=>todo.completed === true)}/>
             )}/>
         <footer className="footer">
-          <span className="todo-count">
-            <strong>{this.state.todos.length}</strong> item(s) left
-          </span>
+        <span className="todo-count">
+          <strong>
+            {this.state.todos.filter(todo => {
+              if (todo.completed === false) {
+                return todo;
+              }
+              return false;
+            }).length
+            }
+          </strong>{" "}
+          item(s) left
+        </span>
           <ul className="filters">
             <li>
               <NavLink exact to="/"activeClassName="selected">All</NavLink>
